@@ -7,6 +7,7 @@ Required software:
 	WiringPi: Framework required by PI4J, must be installed manually on the PI
 
 Commands:
+
 	To copy files from working machine to the Raspberry Pi:
 		sudo scp -r beepbeep/ pi@<Pi_IP>:/home/pi/beepWeb/
 	Where the IP address is the current IP for Raspberry Pi 
