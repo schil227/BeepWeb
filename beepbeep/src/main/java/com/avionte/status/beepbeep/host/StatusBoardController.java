@@ -1,4 +1,4 @@
-package com.avionte.status.beepbeep;
+package com.avionte.status.beepbeep.host;
 
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
