@@ -1,7 +1,7 @@
 package com.avionte.status.beepbeep.core.Data;
 
 import com.avionte.status.beepbeep.core.ResponseDataType;
-import com.pi4j.io.gpio.RaspiPin;
+import com.pi4j.io.gpio.Pin;
 
 public class OutputConfiguration {
 	private final String[] urls;
@@ -9,9 +9,9 @@ public class OutputConfiguration {
 	private final String responseProperty;
 	private final String responseSuccessValue;
 	private final boolean failOnBadResponse;
-	private final RaspiPin pinCode; 
+	private final Pin pinCode; 
 	
-	public OutputConfiguration (String[] urls, ResponseDataType responseType, String responseProperty, String responseSuccessValue, boolean failOnBadResponse, RaspiPin pinCode){
+	public OutputConfiguration (String[] urls, ResponseDataType responseType, String responseProperty, String responseSuccessValue, boolean failOnBadResponse, Pin pinCode){
 		this.urls = urls;
 		this.responseType = responseType;
 		this.responseProperty = responseProperty;
@@ -40,7 +40,7 @@ public class OutputConfiguration {
 		return failOnBadResponse;
 	}
 
-	public RaspiPin getPinCode() {
+	public Pin getPinCode() {
 		return pinCode;
 	}
 }
