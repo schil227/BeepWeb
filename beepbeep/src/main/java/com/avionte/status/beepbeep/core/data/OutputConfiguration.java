@@ -11,9 +11,20 @@ public class OutputConfiguration {
 	private final String responseProperty;
 	private final String responseSuccessValue;
 	private final boolean failOnBadResponse;
+	private final String usernamePropertyKey;
+	private final String passwordPropertyKey;
 	private final Pin pinCode; 
 	
-	public OutputConfiguration (String[] urls, RequestType requestType, ResponseDataType responseType, String responseProperty, String responseSuccessValue, boolean failOnBadResponse, Pin pinCode){
+	public OutputConfiguration (
+			String[] urls, 
+			RequestType requestType, 
+			ResponseDataType responseType, 
+			String responseProperty, 
+			String responseSuccessValue, 
+			boolean failOnBadResponse, 
+			Pin pinCode, 
+			String usernamePropertyKey,
+			String passwordPropertyKey){
 		this.urls = urls;
 		this.requestType = requestType;
 		this.responseType = responseType;
@@ -21,6 +32,8 @@ public class OutputConfiguration {
 		this.responseSuccessValue = responseSuccessValue;
 		this.failOnBadResponse = failOnBadResponse;
 		this.pinCode = pinCode;
+		this.usernamePropertyKey = usernamePropertyKey;
+		this.passwordPropertyKey = passwordPropertyKey;
 	}
 
 	public String[] getUrls() {
@@ -49,5 +62,13 @@ public class OutputConfiguration {
 
 	public Pin getPinCode() {
 		return pinCode;
+	}
+
+	public String getUsernamePropertyKey() {
+		return usernamePropertyKey;
+	}
+
+	public String getPasswordPropertyKey() {
+		return passwordPropertyKey;
 	}
 }

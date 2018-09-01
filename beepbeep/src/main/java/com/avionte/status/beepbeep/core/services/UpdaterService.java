@@ -8,12 +8,17 @@ import java.util.Properties;
 
 import com.avionte.status.beepbeep.core.data.OutputConfiguration;
 import com.avionte.status.beepbeep.core.data.OutputConfigurationException;
+import com.avionte.status.beepbeep.core.services.OutputConfigurationProcessors.IProcessOutputConfigurationService;
 
 public class UpdaterService {
 	private final PopulateOutputConfigurationService populateOutputConfigurationService;
+	private final IProcessOutputConfigurationService processOutputConfigurationServiceComposite;
 	
-	public UpdaterService(PopulateOutputConfigurationService populateOutputConfigurationService) {
+	public UpdaterService(
+			PopulateOutputConfigurationService populateOutputConfigurationService,
+			 IProcessOutputConfigurationService processOutputConfigurationServiceComposite) {
 		this.populateOutputConfigurationService = populateOutputConfigurationService;
+		this.processOutputConfigurationServiceComposite = processOutputConfigurationServiceComposite;
 	}
 	
 	public void update() throws IOException, OutputConfigurationException {
@@ -28,6 +33,10 @@ public class UpdaterService {
 			Collection<OutputConfiguration> configs = this.populateOutputConfigurationService.populateOutputConfiguration(props.getProperty("outputConfigurationFile"));
 			
 			System.out.println("Created " + configs.size() + " configurations.");
+			
+			for(OutputConfiguration config : configs) {
+				this.processOutputConfigurationServiceComposite.processOutputConfiguration(config, props);
+			}
 		}
 		finally {
 			if(input != null) {

@@ -84,13 +84,25 @@ public class PopulateOutputConfigurationService {
 		
 		boolean failOnBadResponse = Boolean.parseBoolean(inputs[7]);
 		
+		String usernamePropertyKey = inputs[8];
+		
+		String passwordPropertyKey = inputs[9];
+		
 		Collection<String> urls = new HashSet<String>();	
 		
-		for (String insert : inputs[8].split(",")) {
+		for (String insert : inputs[10].split(",")) {
 			urls.add(baseUrl.replace("{$}", insert));
 		}
 		
-		return new OutputConfiguration(urls.toArray(new String[urls.size()]), requestType, responseType, responseProperty, responsePositiveValue, failOnBadResponse, pin);
+		return new OutputConfiguration(urls.toArray(new String[urls.size()]), 
+				requestType, 
+				responseType, 
+				responseProperty, 
+				responsePositiveValue, 
+				failOnBadResponse, 
+				pin, 
+				usernamePropertyKey, 
+				passwordPropertyKey);
 	}
 	
 	private Pin getPin(String pinCode) {
