@@ -3,6 +3,7 @@ package com.avionte.status.beepbeep.host;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.avionte.status.beepbeep.core.services.UpdaterService;
 import com.pi4j.io.gpio.GpioController;
 import com.pi4j.io.gpio.GpioFactory;
 import com.pi4j.io.gpio.GpioPinDigitalOutput;
@@ -13,7 +14,10 @@ import com.pi4j.io.gpio.RaspiPin;
 public class StatusBoardController {
 	private static GpioPinDigitalOutput pin;
 	
-	public StatusBoardController() {
+	private UpdaterService updaterService;
+	
+	public StatusBoardController(UpdaterService updaterService) {
+		this.updaterService = updaterService;
 		GpioController gpio = GpioFactory.getInstance();
 		pin = gpio.provisionDigitalOutputPin(RaspiPin.GPIO_01, "Pin 1", PinState.LOW);
 	}
@@ -21,6 +25,17 @@ public class StatusBoardController {
 	@RequestMapping("status/")
 	public String index() {
 		return "You've reached the status controller\n";
+	}
+	
+@RequestMapping("status/update")
+	public String update() {
+		try {
+			this.updaterService.update();
+		} catch(Exception ex) {
+			return "Failed to call update. Exception: " + ex.getMessage();
+		}
+		
+		return "Update Succeeded!";
 	}
 	
 	@RequestMapping("status/toggle")

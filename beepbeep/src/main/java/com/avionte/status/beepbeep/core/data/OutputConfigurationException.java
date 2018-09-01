@@ -1,4 +1,4 @@
-package com.avionte.status.beepbeep.core.Data;
+package com.avionte.status.beepbeep.core.data;
 
 public class OutputConfigurationException extends Exception {
 	private static final long serialVersionUID = 1L;

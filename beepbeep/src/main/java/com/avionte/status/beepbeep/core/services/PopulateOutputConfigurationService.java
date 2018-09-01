@@ -3,17 +3,19 @@ package com.avionte.status.beepbeep.core.services;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashSet;
 
+import com.avionte.status.beepbeep.core.RequestType;
 import com.avionte.status.beepbeep.core.ResponseDataType;
-import com.avionte.status.beepbeep.core.Data.OutputConfiguration;
-import com.avionte.status.beepbeep.core.Data.OutputConfigurationException;
+import com.avionte.status.beepbeep.core.data.OutputConfiguration;
+import com.avionte.status.beepbeep.core.data.OutputConfigurationException;
 import com.pi4j.io.gpio.Pin;
 import com.pi4j.io.gpio.RaspiPin;
 
 public class PopulateOutputConfigurationService {
-	public Collection<OutputConfiguration> PopulateOutputConfiguration(String outputConfigurationFile) throws IOException, OutputConfigurationException {
+	public Collection<OutputConfiguration> populateOutputConfiguration(String outputConfigurationFile) throws IOException, OutputConfigurationException {
 		Collection<OutputConfiguration> outputConfigurations = new HashSet<OutputConfiguration>();
 		BufferedReader reader = null; 
 		
@@ -28,7 +30,7 @@ public class PopulateOutputConfigurationService {
 					continue;
 				}
 				
-				OutputConfiguration newConfig = this.CreateOutputConfiguration(line);
+				OutputConfiguration newConfig = this.createOutputConfiguration(line);
 				
 				if(newConfig != null) {
 					outputConfigurations.add(newConfig);	
@@ -54,15 +56,17 @@ public class PopulateOutputConfigurationService {
 		return outputConfigurations;
 	}
 	
-	private OutputConfiguration CreateOutputConfiguration(String line) throws OutputConfigurationException {
-		String[] inputs = line.split("|");
-		
+	private OutputConfiguration createOutputConfiguration(String line) throws OutputConfigurationException {
+		String[] inputs = line.split("\\|");
+		System.out.println("line: " + line);
+		System.out.println("inputs: " + Arrays.toString(inputs));
+
 		// enabled?
 		if(inputs[0].equals("false")) {
 			return null;
 		}
 		
-		Pin pin = GetRaspiPin(inputs[1]);
+		Pin pin = getPin(inputs[1]);
 		
 		if(pin == null) {
 			throw new OutputConfigurationException("Pin not found: " + inputs[1]);
@@ -70,24 +74,26 @@ public class PopulateOutputConfigurationService {
 		
 		String baseUrl = inputs[2];
 		
-		ResponseDataType responseType = ResponseDataType.valueOf(inputs[3]);
+		RequestType requestType = RequestType.valueOf(inputs[3]);
 		
-		String responseProperty = inputs[4];
+		ResponseDataType responseType = ResponseDataType.valueOf(inputs[4]);
 		
-		String responsePositiveValue = inputs[5];
+		String responseProperty = inputs[5];
 		
-		boolean failOnBadResponse = Boolean.parseBoolean(inputs[6]);
+		String responsePositiveValue = inputs[6];
+		
+		boolean failOnBadResponse = Boolean.parseBoolean(inputs[7]);
 		
 		Collection<String> urls = new HashSet<String>();	
 		
-		for (String insert : inputs[7].split(",")) {
+		for (String insert : inputs[8].split(",")) {
 			urls.add(baseUrl.replace("{$}", insert));
 		}
 		
-		return new OutputConfiguration(urls.toArray(new String[urls.size()]), responseType, responseProperty, responsePositiveValue, failOnBadResponse, pin);
+		return new OutputConfiguration(urls.toArray(new String[urls.size()]), requestType, responseType, responseProperty, responsePositiveValue, failOnBadResponse, pin);
 	}
 	
-	private Pin GetRaspiPin(String pinCode) {
+	private Pin getPin(String pinCode) {
 		switch(pinCode) {
 		case "1":
 			return RaspiPin.GPIO_01;

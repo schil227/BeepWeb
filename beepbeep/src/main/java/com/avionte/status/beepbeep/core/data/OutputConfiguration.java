@@ -1,18 +1,21 @@
-package com.avionte.status.beepbeep.core.Data;
+package com.avionte.status.beepbeep.core.data;
 
+import com.avionte.status.beepbeep.core.RequestType;
 import com.avionte.status.beepbeep.core.ResponseDataType;
 import com.pi4j.io.gpio.Pin;
 
 public class OutputConfiguration {
 	private final String[] urls;
+	private final RequestType requestType;
 	private final ResponseDataType responseType;
 	private final String responseProperty;
 	private final String responseSuccessValue;
 	private final boolean failOnBadResponse;
 	private final Pin pinCode; 
 	
-	public OutputConfiguration (String[] urls, ResponseDataType responseType, String responseProperty, String responseSuccessValue, boolean failOnBadResponse, Pin pinCode){
+	public OutputConfiguration (String[] urls, RequestType requestType, ResponseDataType responseType, String responseProperty, String responseSuccessValue, boolean failOnBadResponse, Pin pinCode){
 		this.urls = urls;
+		this.requestType = requestType;
 		this.responseType = responseType;
 		this.responseProperty = responseProperty;
 		this.responseSuccessValue = responseSuccessValue;
@@ -24,6 +27,10 @@ public class OutputConfiguration {
 		return urls;
 	}
 
+	public RequestType getRequestType() {
+		return requestType;
+	}
+	
 	public ResponseDataType getResponseType() {
 		return responseType;
 	}

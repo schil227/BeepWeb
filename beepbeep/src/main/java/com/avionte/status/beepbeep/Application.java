@@ -1,4 +1,5 @@
-package com.avionte.status.beepbeep.host;
+package com.avionte.status.beepbeep;
+
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
