@@ -1,4 +1,4 @@
-package com.avionte.status.beepbeep.core.services.OutputConfigurationProcessors;
+package com.avionte.status.beepbeep.core.services.outputConfigurationProcessors;
 
 import java.util.Properties;
 

@@ -1,4 +1,4 @@
-package com.avionte.status.beepbeep.core.services.OutputConfigurationProcessors;
+package com.avionte.status.beepbeep.core.services.outputConfigurationProcessors;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -16,9 +16,16 @@ import java.util.Properties;
 
 import com.avionte.status.beepbeep.core.RequestType;
 import com.avionte.status.beepbeep.core.data.OutputConfiguration;
+import com.avionte.status.beepbeep.core.services.responseProcessors.IProcessResponse;
 
 public class ProcessTeamCityOutputConfiguration implements IProcessOutputConfigurationService {
 
+	private final IProcessResponse responseProcessorComposite; 
+	
+	public ProcessTeamCityOutputConfiguration(IProcessResponse responseProcessorComposite) {
+		this.responseProcessorComposite = responseProcessorComposite;
+	}
+	
 	@Override
 	public boolean processOutputConfiguration(OutputConfiguration config, Properties properties) {
 		if(config.getRequestType() != RequestType.TEAMCITY) {
@@ -56,6 +63,13 @@ public class ProcessTeamCityOutputConfiguration implements IProcessOutputConfigu
 				reader.read(response);
 				
 				System.out.println("Response Content: " + String.valueOf(response));
+				
+				if(!responseProcessorComposite.processResponse(config, String.valueOf(response))) {
+					System.out.println("Got a failure: " + url);
+					return false;
+				}
+				
+				System.out.println("Success for " + url);
 			}
 			catch (MalformedURLException ex) {
 				ex.printStackTrace();
@@ -91,6 +105,6 @@ public class ProcessTeamCityOutputConfiguration implements IProcessOutputConfigu
 			}
 		}
 		
-		return false;
+		return true;
 	}
 }

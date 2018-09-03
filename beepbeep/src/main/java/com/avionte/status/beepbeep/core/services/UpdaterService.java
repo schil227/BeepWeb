@@ -8,7 +8,7 @@ import java.util.Properties;
 
 import com.avionte.status.beepbeep.core.data.OutputConfiguration;
 import com.avionte.status.beepbeep.core.data.OutputConfigurationException;
-import com.avionte.status.beepbeep.core.services.OutputConfigurationProcessors.IProcessOutputConfigurationService;
+import com.avionte.status.beepbeep.core.services.outputConfigurationProcessors.IProcessOutputConfigurationService;
 
 public class UpdaterService {
 	private final PopulateOutputConfigurationService populateOutputConfigurationService;
