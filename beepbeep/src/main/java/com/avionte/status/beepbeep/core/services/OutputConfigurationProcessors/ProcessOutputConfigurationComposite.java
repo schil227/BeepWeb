@@ -16,7 +16,7 @@ public class ProcessOutputConfigurationComposite implements IProcessOutputConfig
 	@Override
 	public boolean processOutputConfiguration(OutputConfiguration config, Properties properties) {
 		for(IProcessOutputConfigurationService processor : this.processOutputConfigurationServices) {
-			if(processor.processOutputConfiguration(config, null)) {
+			if(processor.processOutputConfiguration(config, properties)) {
 				return true;
 			}
 		}

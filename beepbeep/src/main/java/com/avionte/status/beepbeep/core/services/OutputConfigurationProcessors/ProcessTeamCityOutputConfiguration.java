@@ -4,13 +4,15 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.net.Authenticator;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
+import java.net.PasswordAuthentication;
 import java.net.URL;
+import java.net.URLConnection;
+import java.nio.charset.StandardCharsets;
 import java.util.Base64;
 import java.util.Properties;
-
-import javax.net.ssl.HttpsURLConnection;
 
 import com.avionte.status.beepbeep.core.RequestType;
 import com.avionte.status.beepbeep.core.data.OutputConfiguration;
@@ -26,32 +28,26 @@ public class ProcessTeamCityOutputConfiguration implements IProcessOutputConfigu
 		for(String url : config.getUrls()) {
 			BufferedReader reader = null;
 			InputStream inputStream = null;
+			URLConnection connection = null;
+			
 			try {
+				Authenticator.setDefault (new Authenticator() {
+				    protected PasswordAuthentication getPasswordAuthentication() {
+				        return new PasswordAuthentication (properties.getProperty(config.getUsernamePropertyKey()), properties.getProperty(config.getPasswordPropertyKey()).toCharArray());
+				    }
+				});
+				
 				URL requestUrl = new URL(url);
 				
-				HttpsURLConnection connection = (HttpsURLConnection) requestUrl.openConnection();
+				connection = (URLConnection)requestUrl.openConnection();
 				
-				connection.setConnectTimeout(5000);
-				connection.setReadTimeout(5000);
-				connection.setRequestMethod("GET");
-
-				String userpass = properties.getProperty(config.getUsernamePropertyKey()) + ":" + properties.getProperty(config.getPasswordPropertyKey());
-				String basicAuth = "Basic " + new String(Base64.getEncoder().encode(userpass.getBytes()));
-				connection.setRequestProperty ("Authorization", basicAuth);
-				inputStream = connection.getInputStream();
+				connection.setConnectTimeout(30000);
+				connection.setReadTimeout(30000);
 				
-				connection.connect();
+				connection.setRequestProperty("Accept-Charset", StandardCharsets.UTF_8.name());
+				InputStream in = connection.getInputStream();
 				
-				if(connection.getResponseCode() != 200) {
-					if(config.isFailOnBadResponse()) {
-						//handle pin change here
-						return false;
-					} else {
-						continue;
-					}
-				}
-				
-				reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+				reader = new BufferedReader(new InputStreamReader(in, "UTF-8"));
 				
 				int contentLength = connection.getContentLength();
 				
@@ -68,7 +64,7 @@ public class ProcessTeamCityOutputConfiguration implements IProcessOutputConfigu
 				ex.printStackTrace();
 			}
 			catch(Exception ex) {
-				
+				ex.printStackTrace();
 			}
 			finally{
 				if(reader != null) {
@@ -88,6 +84,10 @@ public class ProcessTeamCityOutputConfiguration implements IProcessOutputConfigu
 						e.printStackTrace();
 					}
 				}
+//				
+//				if(connection != null) {
+//					connection.disconnect();
+//				}
 			}
 		}
 		
