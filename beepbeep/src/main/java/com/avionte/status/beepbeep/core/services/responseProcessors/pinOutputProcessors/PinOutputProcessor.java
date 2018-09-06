@@ -22,30 +22,39 @@ public class PinOutputProcessor implements IPinOutputProcessor {
 		
 		if(previousState == currentState) {
 			// No change.
+			gpioController.unprovisionPin(gpioPin);
 			return PinUpdateResultType.NO_CHANGE;
 		} 
 		
 		gpioPin.setState(currentState);
 		
 		gpioController.unprovisionPin(gpioPin);
-		
+
 		return isHighOutput ? PinUpdateResultType.POSITIVE_CHANGE : PinUpdateResultType.NEGATIVE_CHANGE;
 	}
 
 	@Override
 	public void processUpdateResult(PinUpdateResultType updateResult) {
-		if(updateResult == PinUpdateResultType.POSITIVE_CHANGE) {
+		switch(updateResult) {
+		case POSITIVE_CHANGE:
 			try {
 				this.handlePositiveChange();
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}
-		} else if(updateResult == PinUpdateResultType.NEGATIVE_CHANGE) {
+			break;
+			
+		case NEGATIVE_CHANGE:
 			try {
 				this.handleNegativeChange();
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}
+			break;
+			
+		default:
+			System.out.println("No status change.");
+			break;
 		}
 	}
 	

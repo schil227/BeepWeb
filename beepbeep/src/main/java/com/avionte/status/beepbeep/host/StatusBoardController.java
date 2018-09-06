@@ -44,7 +44,7 @@ public class StatusBoardController {
 		return "Update Succeeded!";
 	}
 	
-	@Scheduled(fixedRate=1000)
+	@Scheduled(fixedRate=60000)
 	public void updateAgent() throws InterruptedException {
 		System.out.println("Calling the scheduled task!");
 		this.update();
