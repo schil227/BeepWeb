@@ -7,10 +7,10 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashSet;
 
-import com.avionte.status.beepbeep.core.RequestType;
-import com.avionte.status.beepbeep.core.ResponseDataType;
 import com.avionte.status.beepbeep.core.data.OutputConfiguration;
 import com.avionte.status.beepbeep.core.data.OutputConfigurationException;
+import com.avionte.status.beepbeep.core.data.RequestType;
+import com.avionte.status.beepbeep.core.data.ResponseDataType;
 import com.pi4j.io.gpio.Pin;
 import com.pi4j.io.gpio.RaspiPin;
 
@@ -46,7 +46,7 @@ public class PopulateOutputConfigurationService {
 		Collection<Pin> uniquePins = new HashSet<Pin>();
 		
 		for(OutputConfiguration config : outputConfigurations) {
-			uniquePins.add(config.getPinCode());
+			uniquePins.add(config.getPin());
 		}
 		
 		if(uniquePins.size() != outputConfigurations.size()) {

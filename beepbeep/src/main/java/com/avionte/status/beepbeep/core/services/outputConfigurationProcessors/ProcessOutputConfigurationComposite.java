@@ -4,6 +4,7 @@ import java.util.Collection;
 import java.util.Properties;
 
 import com.avionte.status.beepbeep.core.data.OutputConfiguration;
+import com.avionte.status.beepbeep.core.data.PinUpdateResultType;
 
 public class ProcessOutputConfigurationComposite implements IProcessOutputConfigurationService {
 
@@ -14,14 +15,19 @@ public class ProcessOutputConfigurationComposite implements IProcessOutputConfig
 	}
 	
 	@Override
-	public boolean processOutputConfiguration(OutputConfiguration config, Properties properties) {
+	public PinUpdateResultType processOutputConfiguration(OutputConfiguration config, Properties properties) {
+		PinUpdateResultType aggregateResult = PinUpdateResultType.NO_CHANGE;
+		
 		for(IProcessOutputConfigurationService processor : this.processOutputConfigurationServices) {
-			if(processor.processOutputConfiguration(config, properties)) {
-				return true;
+			PinUpdateResultType processorResult = processor.processOutputConfiguration(config, properties);
+			
+			if(processorResult != PinUpdateResultType.NO_CHANGE) {
+				aggregateResult = processorResult;
+				break;
 			}
 		}
 		
-		return false;
+		return aggregateResult;
 	}
 
 }

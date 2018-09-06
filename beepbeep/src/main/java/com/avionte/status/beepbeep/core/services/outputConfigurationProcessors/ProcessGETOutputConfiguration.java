@@ -2,8 +2,9 @@ package com.avionte.status.beepbeep.core.services.outputConfigurationProcessors;
 
 import java.util.Properties;
 
-import com.avionte.status.beepbeep.core.RequestType;
 import com.avionte.status.beepbeep.core.data.OutputConfiguration;
+import com.avionte.status.beepbeep.core.data.PinUpdateResultType;
+import com.avionte.status.beepbeep.core.data.RequestType;
 import com.avionte.status.beepbeep.core.services.responseProcessors.IProcessResponse;
 
 public class ProcessGETOutputConfiguration implements IProcessOutputConfigurationService {
@@ -15,12 +16,12 @@ public class ProcessGETOutputConfiguration implements IProcessOutputConfiguratio
 	}
 	
 	@Override
-	public boolean processOutputConfiguration(OutputConfiguration config, Properties properties) {
+	public PinUpdateResultType processOutputConfiguration(OutputConfiguration config, Properties properties) {
 		if(config.getRequestType() != RequestType.GET) {
-			return false;
+			return PinUpdateResultType.NO_CHANGE;
 		}
 		
-		return false;
+		return PinUpdateResultType.NO_CHANGE;
 	}
 
 }

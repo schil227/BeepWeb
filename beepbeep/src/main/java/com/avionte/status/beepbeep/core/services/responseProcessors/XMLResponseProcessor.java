@@ -2,7 +2,6 @@ package com.avionte.status.beepbeep.core.services.responseProcessors;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
-import java.io.StringReader;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -17,8 +16,8 @@ import org.w3c.dom.Document;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
-import com.avionte.status.beepbeep.core.ResponseDataType;
 import com.avionte.status.beepbeep.core.data.OutputConfiguration;
+import com.avionte.status.beepbeep.core.data.ResponseDataType;
 
 public class XMLResponseProcessor implements IProcessResponse {
 

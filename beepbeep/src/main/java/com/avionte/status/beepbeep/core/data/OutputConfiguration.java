@@ -1,7 +1,5 @@
 package com.avionte.status.beepbeep.core.data;
 
-import com.avionte.status.beepbeep.core.RequestType;
-import com.avionte.status.beepbeep.core.ResponseDataType;
 import com.pi4j.io.gpio.Pin;
 
 public class OutputConfiguration {
@@ -13,7 +11,7 @@ public class OutputConfiguration {
 	private final boolean failOnBadResponse;
 	private final String usernamePropertyKey;
 	private final String passwordPropertyKey;
-	private final Pin pinCode; 
+	private final Pin pin; 
 	
 	public OutputConfiguration (
 			String[] urls, 
@@ -22,7 +20,7 @@ public class OutputConfiguration {
 			String responseProperty, 
 			String responseSuccessValue, 
 			boolean failOnBadResponse, 
-			Pin pinCode, 
+			Pin pin, 
 			String usernamePropertyKey,
 			String passwordPropertyKey){
 		this.urls = urls;
@@ -31,7 +29,7 @@ public class OutputConfiguration {
 		this.responseProperty = responseProperty;
 		this.responseSuccessValue = responseSuccessValue;
 		this.failOnBadResponse = failOnBadResponse;
-		this.pinCode = pinCode;
+		this.pin = pin;
 		this.usernamePropertyKey = usernamePropertyKey;
 		this.passwordPropertyKey = passwordPropertyKey;
 	}
@@ -60,8 +58,8 @@ public class OutputConfiguration {
 		return failOnBadResponse;
 	}
 
-	public Pin getPinCode() {
-		return pinCode;
+	public Pin getPin() {
+		return pin;
 	}
 
 	public String getUsernamePropertyKey() {

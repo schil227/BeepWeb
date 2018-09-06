@@ -13,6 +13,8 @@ import com.avionte.status.beepbeep.core.services.outputConfigurationProcessors.P
 import com.avionte.status.beepbeep.core.services.responseProcessors.IProcessResponse;
 import com.avionte.status.beepbeep.core.services.responseProcessors.ResponseProcessorComposite;
 import com.avionte.status.beepbeep.core.services.responseProcessors.XMLResponseProcessor;
+import com.avionte.status.beepbeep.core.services.responseProcessors.pinOutputProcessors.IPinOutputProcessor;
+import com.avionte.status.beepbeep.core.services.responseProcessors.pinOutputProcessors.PinOutputProcessor;
 
 @Configuration
 public class CompositionRoot {
@@ -23,12 +25,12 @@ public class CompositionRoot {
 	
 	@Bean
 	public UpdaterService getUpdatorService() {
-		return new UpdaterService(getPopulateOutputConfigurationService(), getProcessOutputConfigurationComposite());
+		return new UpdaterService(getPopulateOutputConfigurationService(), getProcessOutputConfigurationComposite(), getPinOutputProcessor());
 	}
 	
 	@Bean
 	public ProcessTeamCityOutputConfiguration getProcessTeamCityOutputConfiguration() {
-		return new ProcessTeamCityOutputConfiguration(getResponseProcessorComposite());
+		return new ProcessTeamCityOutputConfiguration(getResponseProcessorComposite(), getPinOutputProcessor());
 	}
 	
 	@Bean
@@ -47,5 +49,9 @@ public class CompositionRoot {
 	
 	public IProcessResponse getResponseProcessorComposite() {
 		return new ResponseProcessorComposite(Arrays.asList(getXMLResponseProcessor()));
+	}
+	
+	public IPinOutputProcessor getPinOutputProcessor() {
+		return new PinOutputProcessor();
 	}
 }
