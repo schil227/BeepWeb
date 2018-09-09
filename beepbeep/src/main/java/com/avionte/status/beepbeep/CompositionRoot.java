@@ -4,8 +4,11 @@ import java.util.Arrays;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-import com.avionte.status.beepbeep.core.services.PopulateOutputConfigurationService;
 import com.avionte.status.beepbeep.core.services.UpdaterService;
+import com.avionte.status.beepbeep.core.services.outputConfigurationParsers.IParseOutputConfigurationService;
+import com.avionte.status.beepbeep.core.services.outputConfigurationParsers.IPopulateOutputConfigurationService;
+import com.avionte.status.beepbeep.core.services.outputConfigurationParsers.ParseOutputConfigurationService;
+import com.avionte.status.beepbeep.core.services.outputConfigurationParsers.PopulateOutputConfigurationService;
 import com.avionte.status.beepbeep.core.services.outputConfigurationProcessors.IProcessOutputConfigurationService;
 import com.avionte.status.beepbeep.core.services.outputConfigurationProcessors.ProcessGETOutputConfiguration;
 import com.avionte.status.beepbeep.core.services.outputConfigurationProcessors.ProcessOutputConfigurationComposite;
@@ -19,8 +22,13 @@ import com.avionte.status.beepbeep.core.services.responseProcessors.pinOutputPro
 @Configuration
 public class CompositionRoot {
 	@Bean
-	public PopulateOutputConfigurationService getPopulateOutputConfigurationService(){
-		return new PopulateOutputConfigurationService();
+	public IParseOutputConfigurationService getParseOutputConfigurationService() {
+		return new ParseOutputConfigurationService();
+	}
+	
+	@Bean
+	public IPopulateOutputConfigurationService getPopulateOutputConfigurationService(){
+		return new PopulateOutputConfigurationService(getParseOutputConfigurationService());
 	}
 	
 	@Bean

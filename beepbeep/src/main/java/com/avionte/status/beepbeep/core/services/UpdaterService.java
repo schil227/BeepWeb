@@ -9,17 +9,18 @@ import java.util.Properties;
 import com.avionte.status.beepbeep.core.data.OutputConfiguration;
 import com.avionte.status.beepbeep.core.data.OutputConfigurationException;
 import com.avionte.status.beepbeep.core.data.PinUpdateResultType;
+import com.avionte.status.beepbeep.core.services.outputConfigurationParsers.IPopulateOutputConfigurationService;
 import com.avionte.status.beepbeep.core.services.outputConfigurationProcessors.IProcessOutputConfigurationService;
 import com.avionte.status.beepbeep.core.services.responseProcessors.pinOutputProcessors.IPinOutputProcessor;
 
 public class UpdaterService {
 	
-	private final PopulateOutputConfigurationService populateOutputConfigurationService;
+	private final IPopulateOutputConfigurationService populateOutputConfigurationService;
 	private final IProcessOutputConfigurationService processOutputConfigurationServiceComposite;
 	private final IPinOutputProcessor pinOutputProcessor;
 	
 	public UpdaterService(
-			PopulateOutputConfigurationService populateOutputConfigurationService,
+			IPopulateOutputConfigurationService populateOutputConfigurationService,
 			 IProcessOutputConfigurationService processOutputConfigurationServiceComposite,
 			 IPinOutputProcessor pinOutputProcessor) {
 		this.populateOutputConfigurationService = populateOutputConfigurationService;

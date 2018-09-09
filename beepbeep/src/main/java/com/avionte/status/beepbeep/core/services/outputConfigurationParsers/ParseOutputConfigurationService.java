@@ -1,8 +1,5 @@
-package com.avionte.status.beepbeep.core.services;
+package com.avionte.status.beepbeep.core.services.outputConfigurationParsers;
 
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.IOException;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashSet;
@@ -14,55 +11,13 @@ import com.avionte.status.beepbeep.core.data.ResponseDataType;
 import com.pi4j.io.gpio.Pin;
 import com.pi4j.io.gpio.RaspiPin;
 
-public class PopulateOutputConfigurationService {
-	public Collection<OutputConfiguration> populateOutputConfiguration(String outputConfigurationFile) throws IOException, OutputConfigurationException {
-		Collection<OutputConfiguration> outputConfigurations = new HashSet<OutputConfiguration>();
-		BufferedReader reader = null; 
-		
-		try {
-			reader = new BufferedReader(new FileReader(outputConfigurationFile));
-			String line = "";
-			
-			while((line = reader.readLine()) != null) {
-				
-				if(line.isEmpty() || line.startsWith("#")) {
-					//Ignore comment lines
-					continue;
-				}
-				
-				OutputConfiguration newConfig = this.createOutputConfiguration(line);
-				
-				if(newConfig != null) {
-					outputConfigurations.add(newConfig);	
-				}
-			}
-		}
-		finally {
-			if(reader != null) {
-				reader.close();	
-			}
-		}
-		
-		Collection<Pin> uniquePins = new HashSet<Pin>();
-		
-		for(OutputConfiguration config : outputConfigurations) {
-			uniquePins.add(config.getPin());
-		}
-		
-		if(uniquePins.size() != outputConfigurations.size()) {
-			throw new OutputConfigurationException("Only one pin may be used per configuration - update the configuration file.");
-		}
-		
-		return outputConfigurations;
-	}
-	
-	private OutputConfiguration createOutputConfiguration(String line) throws OutputConfigurationException {
-		String[] inputs = line.split("\\|");
-		System.out.println("line: " + line);
-		System.out.println("inputs: " + Arrays.toString(inputs));
+public class ParseOutputConfigurationService implements IParseOutputConfigurationService {
 
-		// enabled?
-		if(inputs[0].equals("false")) {
+	@Override
+	public OutputConfiguration parse(String line) throws OutputConfigurationException {
+		String[] inputs = line.split("\\|");
+
+		if(inputs.length < 10 || inputs.length >= 12 || inputs[0].equals("false")) {
 			return null;
 		}
 		
@@ -90,9 +45,16 @@ public class PopulateOutputConfigurationService {
 		
 		Collection<String> urls = new HashSet<String>();	
 		
-		for (String insert : inputs[10].split(",")) {
-			urls.add(baseUrl.replace("{$}", insert));
+		String inserts = inputs[10];
+		
+		if(inserts != null) {
+			for (String insert : inputs[10].split(",")) {
+				urls.add(baseUrl.replace("{$}", insert));
+			}	
+		}else {
+			urls.add(baseUrl);
 		}
+		
 		
 		return new OutputConfiguration(urls.toArray(new String[urls.size()]), 
 				requestType, 
