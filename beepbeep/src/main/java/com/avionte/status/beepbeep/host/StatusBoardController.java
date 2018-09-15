@@ -18,17 +18,14 @@ import com.pi4j.io.gpio.RaspiPin;
 
 @RestController
 public class StatusBoardController {
-//	private static GpioPinDigitalOutput pin;
 	
 	private UpdaterService updaterService;
 	
 	public StatusBoardController(UpdaterService updaterService) {
 		this.updaterService = updaterService;
-//		GpioController gpio = GpioFactory.getInstance();
-//		pin = gpio.provisionDigitalOutputPin(RaspiPin.GPIO_01, "Pin 1", PinState.LOW);
 	}
 	
-	@RequestMapping("status/")
+	@RequestMapping("/")
 	public String index() {
 		return "You've reached the status controller\n";
 	}
@@ -77,26 +74,4 @@ public class StatusBoardController {
 		
 		return message;
 	}
-	
-//	@RequestMapping("status/blink")
-//	public String blink() throws InterruptedException {
-//		String message = "";
-//		
-//		pin.high();
-//		
-//		Thread.sleep(5000);
-//		
-//		pin.low();
-//		
-//		Thread.sleep(5000);
-//		
-//		pin.high();
-//		
-//		Thread.sleep(5000);
-//		
-//		pin.low();
-//		
-//		return "Blink!\n";
-////		gpio.unprovisionPin(pin);
-//	}
 }
