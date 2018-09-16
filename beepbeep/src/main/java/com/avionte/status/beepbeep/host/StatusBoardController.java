@@ -4,7 +4,8 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.avionte.status.beepbeep.core.services.UpdaterService;
+import com.avionte.status.beepbeep.core.services.IStatusService;
+import com.avionte.status.beepbeep.core.services.IUpdaterService;
 //import com.pi4j.io.gpio.GpioController;
 //import com.pi4j.io.gpio.GpioFactory;
 //import com.pi4j.io.gpio.GpioPinDigitalOutput;
@@ -19,15 +20,20 @@ import com.pi4j.io.gpio.RaspiPin;
 @RestController
 public class StatusBoardController {
 	
-	private UpdaterService updaterService;
+	private IUpdaterService updaterService;
+	private IStatusService statusService;
 	
-	public StatusBoardController(UpdaterService updaterService) {
+	public StatusBoardController(
+			IUpdaterService updaterService,
+			IStatusService statusService
+			) {
 		this.updaterService = updaterService;
+		this.statusService = statusService;
 	}
 	
 	@RequestMapping("/")
 	public String index() {
-		return "You've reached the status controller\n";
+		return "You've reached the status controller.\r\nStatus:\r\n" + statusService.getStatus();
 	}
 	
 	@RequestMapping("status/update")

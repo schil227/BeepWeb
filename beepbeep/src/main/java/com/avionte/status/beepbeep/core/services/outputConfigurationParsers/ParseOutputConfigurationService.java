@@ -17,7 +17,7 @@ public class ParseOutputConfigurationService implements IParseOutputConfiguratio
 	public OutputConfiguration parse(String line) throws OutputConfigurationException {
 		String[] inputs = line.split("\\|");
 
-		if(inputs.length < 10 || inputs.length >= 12 || inputs[0].equals("false")) {
+		if(inputs.length < 11 || inputs.length > 12 || inputs[0].equals("false")) {
 			return null;
 		}
 		
@@ -27,36 +27,38 @@ public class ParseOutputConfigurationService implements IParseOutputConfiguratio
 			throw new OutputConfigurationException("Pin not found: " + inputs[1]);
 		}
 		
-		String baseUrl = inputs[2];
+		String name = inputs[2];
 		
-		RequestType requestType = RequestType.valueOf(inputs[3]);
+		String baseUrl = inputs[3];
 		
-		ResponseDataType responseType = ResponseDataType.valueOf(inputs[4]);
+		RequestType requestType = RequestType.valueOf(inputs[4]);
 		
-		String responseProperty = inputs[5];
+		ResponseDataType responseType = ResponseDataType.valueOf(inputs[5]);
 		
-		String responsePositiveValue = inputs[6];
+		String responseProperty = inputs[6];
 		
-		boolean failOnBadResponse = Boolean.parseBoolean(inputs[7]);
+		String responsePositiveValue = inputs[7];
 		
-		String usernamePropertyKey = inputs[8];
+		boolean failOnBadResponse = Boolean.parseBoolean(inputs[8]);
 		
-		String passwordPropertyKey = inputs[9];
+		String usernamePropertyKey = inputs[9];
+		
+		String passwordPropertyKey = inputs[10];
 		
 		Collection<String> urls = new HashSet<String>();	
 		
-		String inserts = inputs[10];
+		String inserts = inputs[11];
 		
 		if(inserts != null) {
-			for (String insert : inputs[10].split(",")) {
+			for (String insert : inputs[11].split(",")) {
 				urls.add(baseUrl.replace("{$}", insert));
 			}	
 		}else {
 			urls.add(baseUrl);
 		}
 		
-		
-		return new OutputConfiguration(urls.toArray(new String[urls.size()]), 
+		return new OutputConfiguration(name,
+				urls.toArray(new String[urls.size()]), 
 				requestType, 
 				responseType, 
 				responseProperty, 

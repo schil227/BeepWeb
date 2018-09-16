@@ -1,6 +1,7 @@
-package com.avionte.status.beepbeep.core.services.responseProcessors.pinOutputProcessors;
+package com.avionte.status.beepbeep.core.services.outputConfigurationResultProcessors;
 
 import com.avionte.status.beepbeep.core.data.PinUpdateResultType;
+import com.avionte.status.beepbeep.core.services.IStatusRepository;
 import com.pi4j.io.gpio.GpioController;
 import com.pi4j.io.gpio.GpioFactory;
 import com.pi4j.io.gpio.GpioPinDigitalOutput;

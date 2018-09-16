@@ -11,9 +11,9 @@ import com.avionte.status.beepbeep.core.data.OutputConfigurationException;
 import com.avionte.status.beepbeep.core.data.PinUpdateResultType;
 import com.avionte.status.beepbeep.core.services.outputConfigurationParsers.IPopulateOutputConfigurationService;
 import com.avionte.status.beepbeep.core.services.outputConfigurationProcessors.IProcessOutputConfigurationService;
-import com.avionte.status.beepbeep.core.services.responseProcessors.pinOutputProcessors.IPinOutputProcessor;
+import com.avionte.status.beepbeep.core.services.outputConfigurationResultProcessors.IPinOutputProcessor;
 
-public class UpdaterService {
+public class UpdaterService implements IUpdaterService {
 	
 	private final IPopulateOutputConfigurationService populateOutputConfigurationService;
 	private final IProcessOutputConfigurationService processOutputConfigurationServiceComposite;
@@ -28,6 +28,10 @@ public class UpdaterService {
 		this.pinOutputProcessor = pinOutputProcessor;
 	}
 	
+	/* (non-Javadoc)
+	 * @see com.avionte.status.beepbeep.core.services.IUpdaterService#update()
+	 */
+	@Override
 	public void update() throws IOException, OutputConfigurationException {
 		InputStream input = null;
 		

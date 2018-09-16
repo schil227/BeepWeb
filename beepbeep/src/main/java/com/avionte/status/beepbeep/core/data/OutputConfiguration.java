@@ -3,6 +3,7 @@ package com.avionte.status.beepbeep.core.data;
 import com.pi4j.io.gpio.Pin;
 
 public class OutputConfiguration {
+	private final String name;
 	private final String[] urls;
 	private final RequestType requestType;
 	private final ResponseDataType responseType;
@@ -14,6 +15,7 @@ public class OutputConfiguration {
 	private final Pin pin; 
 	
 	public OutputConfiguration (
+			String name,
 			String[] urls, 
 			RequestType requestType, 
 			ResponseDataType responseType, 
@@ -23,6 +25,7 @@ public class OutputConfiguration {
 			Pin pin, 
 			String usernamePropertyKey,
 			String passwordPropertyKey){
+		this.name = name;
 		this.urls = urls;
 		this.requestType = requestType;
 		this.responseType = responseType;
@@ -34,6 +37,10 @@ public class OutputConfiguration {
 		this.passwordPropertyKey = passwordPropertyKey;
 	}
 
+	public String getName() {
+		return name;
+	}
+	
 	public String[] getUrls() {
 		return urls;
 	}

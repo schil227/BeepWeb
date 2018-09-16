@@ -15,17 +15,20 @@ import java.util.Properties;
 import com.avionte.status.beepbeep.core.data.OutputConfiguration;
 import com.avionte.status.beepbeep.core.data.PinUpdateResultType;
 import com.avionte.status.beepbeep.core.data.RequestType;
+import com.avionte.status.beepbeep.core.services.outputConfigurationResultProcessors.IOutputConfigurationResultHandlerService;
+import com.avionte.status.beepbeep.core.services.outputConfigurationResultProcessors.IPinOutputProcessor;
 import com.avionte.status.beepbeep.core.services.responseProcessors.IProcessResponse;
-import com.avionte.status.beepbeep.core.services.responseProcessors.pinOutputProcessors.IPinOutputProcessor;
 
 public class ProcessTeamCityOutputConfiguration implements IProcessOutputConfigurationService {
 
 	private final IProcessResponse responseProcessorComposite; 
-	private final IPinOutputProcessor pinOutputProcessor;
+	private final IOutputConfigurationResultHandlerService outputConfigurationResultHandlerService;
 	
-	public ProcessTeamCityOutputConfiguration(IProcessResponse responseProcessorComposite, IPinOutputProcessor pinOutputProcessor) {
+	public ProcessTeamCityOutputConfiguration(
+			IProcessResponse responseProcessorComposite,
+			IOutputConfigurationResultHandlerService outputConfigurationResultHandlerService) {
 		this.responseProcessorComposite = responseProcessorComposite;
-		this.pinOutputProcessor = pinOutputProcessor;
+		this.outputConfigurationResultHandlerService = outputConfigurationResultHandlerService;
 	}
 	
 	@Override
@@ -70,7 +73,7 @@ public class ProcessTeamCityOutputConfiguration implements IProcessOutputConfigu
 				
 				if(!responseProcessorComposite.processResponse(config, String.valueOf(response))) {
 					System.out.println("Got a failure: " + url);
-					return this.pinOutputProcessor.updatePin(config.getPin(), false);
+					return this.outputConfigurationResultHandlerService.handle(config, false);
 				}
 				
 				System.out.println("Success for " + url);
@@ -113,6 +116,6 @@ public class ProcessTeamCityOutputConfiguration implements IProcessOutputConfigu
 		
 		System.out.println("All config urls processed.");
 		
-		return this.pinOutputProcessor.updatePin(config.getPin(), isSuccessful);
+		return this.outputConfigurationResultHandlerService.handle(config, isSuccessful);
 	}
 }

@@ -30,18 +30,18 @@ public class ParseOutputConfigurationServiceTests extends TestCase{
 	}
 	
 	public void test_createOutputConfiguration_WhenParsedInputsGreaterThan12_ReturnsNull() throws OutputConfigurationException {
-		assertEquals(null, sut.parse("1|2|3|4|5|6|7|8|9|10|11|12"));
+		assertEquals(null, sut.parse("1|2|3|4|5|6|7|8|9|10|11|12|13"));
 	}
 	
 	public void test_createOutputConfiguration_WhenConfigNotEnabled_ReturnsNull() throws OutputConfigurationException {
-		assertEquals(null, sut.parse("false|<pin_code>|<base_url>|<request_type>|<response_type>|<response_property>|<response_positive_value>|<fail_on_bad_response>|<username>|<password>|<csv_inserts>"));
+		assertEquals(null, sut.parse("false|<pin_code>|<configuration_name>|<base_url>|<request_type>|<response_type>|<response_property>|<response_positive_value>|<fail_on_bad_response>|<username>|<password>|<csv_inserts>"));
 	}
 	
 	public void test_createOutputConfiguration_WhenPinNotFound_ThrowsOutputConfigurationException() throws OutputConfigurationException {
 		boolean exceptionThrown = false;
 		
 		try {
-			sut.parse("true|999|<base_url>|<request_type>|<response_type>|<response_property>|<response_positive_value>|<fail_on_bad_response>|<username>|<password>|<csv_inserts>");
+			sut.parse("true|999|<configuration_name>|<base_url>|<request_type>|<response_type>|<response_property>|<response_positive_value>|<fail_on_bad_response>|<username>|<password>|<csv_inserts>");
 		}catch(OutputConfigurationException ex) {
 			exceptionThrown = true;
 		}
@@ -53,7 +53,7 @@ public class ParseOutputConfigurationServiceTests extends TestCase{
 		boolean exceptionThrown = false;
 		
 		try {
-			sut.parse("true|1|test.com|banana|<response_type>|<response_property>|<response_positive_value>|<fail_on_bad_response>|<username>|<password>|<csv_inserts>");
+			sut.parse("true|1|configName|test.com|banana|<response_type>|<response_property>|<response_positive_value>|<fail_on_bad_response>|<username>|<password>|<csv_inserts>");
 		}catch(IllegalArgumentException ex) {
 			exceptionThrown = true;
 		}
@@ -65,7 +65,7 @@ public class ParseOutputConfigurationServiceTests extends TestCase{
 		boolean exceptionThrown = false;
 		
 		try {
-			sut.parse("true|1|test.com|TEAMCITY|banana|<response_property>|<response_positive_value>|<fail_on_bad_response>|<username>|<password>|<csv_inserts>");
+			sut.parse("true|1|configName|test.com|TEAMCITY|banana|<response_property>|<response_positive_value>|<fail_on_bad_response>|<username>|<password>|<csv_inserts>");
 		}catch(IllegalArgumentException ex) {
 			exceptionThrown = true;
 		}
@@ -77,7 +77,7 @@ public class ParseOutputConfigurationServiceTests extends TestCase{
 		boolean exceptionThrown = false;
 		
 		try {
-			sut.parse("true|1|test.com|TEAMCITY|banana|respProp|respPositiveValue|banana|<username>|<password>|<csv_inserts>");
+			sut.parse("true|1|configName|test.com|TEAMCITY|banana|respProp|respPositiveValue|banana|<username>|<password>|<csv_inserts>");
 		}catch(IllegalArgumentException ex) {
 			exceptionThrown = true;
 		}
@@ -86,7 +86,7 @@ public class ParseOutputConfigurationServiceTests extends TestCase{
 	}
 	
 	public void test_createOutputConfiguration_WhenSeveralInsertsExist_ReturnsConfigWithSeveralUrls() throws OutputConfigurationException {
-		OutputConfiguration config = sut.parse("true|1|test{$}.com|TEAMCITY|XML|respProp|respPositiveValue|true|banana|hunter12|1,2,3");
+		OutputConfiguration config = sut.parse("true|1|configName|test{$}.com|TEAMCITY|XML|respProp|respPositiveValue|true|banana|hunter12|1,2,3");
 		
 		assertEquals(config.getUrls().length, 3);
 	}
