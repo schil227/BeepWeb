@@ -6,9 +6,9 @@ import java.io.InputStream;
 import java.util.Collection;
 import java.util.Properties;
 
-import com.avionte.status.beepbeep.core.data.OutputConfiguration;
-import com.avionte.status.beepbeep.core.data.OutputConfigurationException;
-import com.avionte.status.beepbeep.core.data.PinUpdateResultType;
+import com.avionte.status.beepbeep.core.data.model.OutputConfiguration;
+import com.avionte.status.beepbeep.core.data.model.OutputConfigurationException;
+import com.avionte.status.beepbeep.core.data.model.PinUpdateResultType;
 import com.avionte.status.beepbeep.core.services.outputConfigurationParsers.IPopulateOutputConfigurationService;
 import com.avionte.status.beepbeep.core.services.outputConfigurationProcessors.IProcessOutputConfigurationService;
 import com.avionte.status.beepbeep.core.services.outputConfigurationResultProcessors.IPinOutputProcessor;

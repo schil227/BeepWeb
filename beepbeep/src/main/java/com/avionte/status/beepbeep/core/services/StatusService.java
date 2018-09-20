@@ -1,6 +1,10 @@
 package com.avionte.status.beepbeep.core.services;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
+
+import com.avionte.status.beepbeep.core.data.viewModel.OutputConfigurationViewModel;
 
 public class StatusService implements IStatusService {
 
@@ -11,18 +15,16 @@ public class StatusService implements IStatusService {
 	}
 	
 	@Override
-	public String getStatus() {
+	public List<OutputConfigurationViewModel> getStatus() {
 		HashMap<String, Boolean> currentStatus = statusRepository.getCurrentStatuses();
 		
-		StringBuilder sb = new StringBuilder();
+		List<OutputConfigurationViewModel> configurations = new ArrayList<OutputConfigurationViewModel>();
 		
 		for(String key : currentStatus.keySet()){
-			String status = currentStatus.get(key) ? "GREEN" : "RED";
-			
-			sb.append(key + " : " + status + "\r\n");
+			configurations.add(new OutputConfigurationViewModel(key, currentStatus.get(key)));
 		}
 		
-		return sb.toString();
+		return configurations;
 	}
 
 }

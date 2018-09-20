@@ -1,9 +1,16 @@
 package com.avionte.status.beepbeep.host;
 
+import java.util.List;
+
 import org.springframework.scheduling.annotation.Scheduled;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.avionte.status.beepbeep.core.data.viewModel.OutputConfigurationViewModel;
 import com.avionte.status.beepbeep.core.services.IStatusService;
 import com.avionte.status.beepbeep.core.services.IUpdaterService;
 //import com.pi4j.io.gpio.GpioController;
@@ -24,6 +31,7 @@ public class StatusBoardController {
 	private IStatusService statusService;
 	
 	public StatusBoardController(
+	
 			IUpdaterService updaterService,
 			IStatusService statusService
 			) {
@@ -32,12 +40,25 @@ public class StatusBoardController {
 	}
 	
 	@RequestMapping("/")
-	public String index() {
-		return "You've reached the status controller.\r\nStatus:\r\n" + statusService.getStatus();
+	public String index(Model model) {
+		// The name of the view to render
+		return "index"; 
+	}
+	
+	@CrossOrigin(origins = "http://localhost:4200")
+	@RequestMapping(value = "status/", method = {RequestMethod.GET})
+	public List<OutputConfigurationViewModel> status() {
+		List<OutputConfigurationViewModel> statuses = statusService.getStatus();
+		
+		statuses.add(new OutputConfigurationViewModel("Dummy", true));
+		
+		return statuses;
 	}
 	
 	@RequestMapping("status/update")
 	public String update() {
+		System.out.println("Update Endpoint Triggered.");
+		
 		try {
 			this.updaterService.update();
 		} catch(Exception ex) {

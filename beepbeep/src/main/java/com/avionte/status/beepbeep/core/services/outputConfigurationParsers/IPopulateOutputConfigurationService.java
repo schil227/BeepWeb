@@ -3,8 +3,8 @@ package com.avionte.status.beepbeep.core.services.outputConfigurationParsers;
 import java.io.IOException;
 import java.util.Collection;
 
-import com.avionte.status.beepbeep.core.data.OutputConfiguration;
-import com.avionte.status.beepbeep.core.data.OutputConfigurationException;
+import com.avionte.status.beepbeep.core.data.model.OutputConfiguration;
+import com.avionte.status.beepbeep.core.data.model.OutputConfigurationException;
 
 public interface IPopulateOutputConfigurationService {
 

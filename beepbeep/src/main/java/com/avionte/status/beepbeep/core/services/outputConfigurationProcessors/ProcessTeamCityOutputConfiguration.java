@@ -12,9 +12,9 @@ import java.net.URLConnection;
 import java.nio.charset.StandardCharsets;
 import java.util.Properties;
 
-import com.avionte.status.beepbeep.core.data.OutputConfiguration;
-import com.avionte.status.beepbeep.core.data.PinUpdateResultType;
-import com.avionte.status.beepbeep.core.data.RequestType;
+import com.avionte.status.beepbeep.core.data.model.OutputConfiguration;
+import com.avionte.status.beepbeep.core.data.model.PinUpdateResultType;
+import com.avionte.status.beepbeep.core.data.model.RequestType;
 import com.avionte.status.beepbeep.core.services.outputConfigurationResultProcessors.IOutputConfigurationResultHandlerService;
 import com.avionte.status.beepbeep.core.services.outputConfigurationResultProcessors.IPinOutputProcessor;
 import com.avionte.status.beepbeep.core.services.responseProcessors.IProcessResponse;
@@ -69,7 +69,7 @@ public class ProcessTeamCityOutputConfiguration implements IProcessOutputConfigu
 				
 				reader.read(response);
 				
-				System.out.println("Response Content: " + String.valueOf(response));
+//				System.out.println("Response Content: " + String.valueOf(response));
 				
 				if(!responseProcessorComposite.processResponse(config, String.valueOf(response))) {
 					System.out.println("Got a failure: " + url);

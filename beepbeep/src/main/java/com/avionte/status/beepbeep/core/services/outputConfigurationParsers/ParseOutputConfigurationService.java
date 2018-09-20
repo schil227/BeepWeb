@@ -4,10 +4,10 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashSet;
 
-import com.avionte.status.beepbeep.core.data.OutputConfiguration;
-import com.avionte.status.beepbeep.core.data.OutputConfigurationException;
-import com.avionte.status.beepbeep.core.data.RequestType;
-import com.avionte.status.beepbeep.core.data.ResponseDataType;
+import com.avionte.status.beepbeep.core.data.model.OutputConfiguration;
+import com.avionte.status.beepbeep.core.data.model.OutputConfigurationException;
+import com.avionte.status.beepbeep.core.data.model.RequestType;
+import com.avionte.status.beepbeep.core.data.model.ResponseDataType;
 import com.pi4j.io.gpio.Pin;
 import com.pi4j.io.gpio.RaspiPin;
 
@@ -47,9 +47,7 @@ public class ParseOutputConfigurationService implements IParseOutputConfiguratio
 		
 		Collection<String> urls = new HashSet<String>();	
 		
-		String inserts = inputs[11];
-		
-		if(inserts != null) {
+		if(inputs.length > 11) {
 			for (String insert : inputs[11].split(",")) {
 				urls.add(baseUrl.replace("{$}", insert));
 			}	

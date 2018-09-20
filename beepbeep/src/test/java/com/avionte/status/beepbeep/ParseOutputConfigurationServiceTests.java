@@ -2,8 +2,8 @@ package com.avionte.status.beepbeep;
 
 import org.junit.Test;
 
-import com.avionte.status.beepbeep.core.data.OutputConfiguration;
-import com.avionte.status.beepbeep.core.data.OutputConfigurationException;
+import com.avionte.status.beepbeep.core.data.model.OutputConfiguration;
+import com.avionte.status.beepbeep.core.data.model.OutputConfigurationException;
 import com.avionte.status.beepbeep.core.services.outputConfigurationParsers.IParseOutputConfigurationService;
 import com.avionte.status.beepbeep.core.services.outputConfigurationParsers.ParseOutputConfigurationService;
 

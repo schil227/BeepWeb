@@ -3,8 +3,8 @@ package com.avionte.status.beepbeep.core.services.outputConfigurationProcessors;
 import java.util.Collection;
 import java.util.Properties;
 
-import com.avionte.status.beepbeep.core.data.OutputConfiguration;
-import com.avionte.status.beepbeep.core.data.PinUpdateResultType;
+import com.avionte.status.beepbeep.core.data.model.OutputConfiguration;
+import com.avionte.status.beepbeep.core.data.model.PinUpdateResultType;
 
 public class ProcessOutputConfigurationComposite implements IProcessOutputConfigurationService {
 

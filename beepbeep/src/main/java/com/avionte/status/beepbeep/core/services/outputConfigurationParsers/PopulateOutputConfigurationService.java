@@ -7,10 +7,10 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashSet;
 
-import com.avionte.status.beepbeep.core.data.OutputConfiguration;
-import com.avionte.status.beepbeep.core.data.OutputConfigurationException;
-import com.avionte.status.beepbeep.core.data.RequestType;
-import com.avionte.status.beepbeep.core.data.ResponseDataType;
+import com.avionte.status.beepbeep.core.data.model.OutputConfiguration;
+import com.avionte.status.beepbeep.core.data.model.OutputConfigurationException;
+import com.avionte.status.beepbeep.core.data.model.RequestType;
+import com.avionte.status.beepbeep.core.data.model.ResponseDataType;
 import com.pi4j.io.gpio.Pin;
 import com.pi4j.io.gpio.RaspiPin;
 

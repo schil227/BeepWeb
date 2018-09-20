@@ -2,7 +2,7 @@ package com.avionte.status.beepbeep.core.services.responseProcessors;
 
 import java.util.Collection;
 
-import com.avionte.status.beepbeep.core.data.OutputConfiguration;
+import com.avionte.status.beepbeep.core.data.model.OutputConfiguration;
 
 public class ResponseProcessorComposite implements IProcessResponse {
 

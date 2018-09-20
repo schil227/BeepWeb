@@ -2,9 +2,9 @@ package com.avionte.status.beepbeep.core.services.outputConfigurationProcessors;
 
 import java.util.Properties;
 
-import com.avionte.status.beepbeep.core.data.OutputConfiguration;
-import com.avionte.status.beepbeep.core.data.PinUpdateResultType;
-import com.avionte.status.beepbeep.core.data.RequestType;
+import com.avionte.status.beepbeep.core.data.model.OutputConfiguration;
+import com.avionte.status.beepbeep.core.data.model.PinUpdateResultType;
+import com.avionte.status.beepbeep.core.data.model.RequestType;
 import com.avionte.status.beepbeep.core.services.responseProcessors.IProcessResponse;
 
 public class ProcessGETOutputConfiguration implements IProcessOutputConfigurationService {
