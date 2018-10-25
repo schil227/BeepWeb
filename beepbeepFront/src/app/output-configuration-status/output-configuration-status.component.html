@@ -1,18 +1,15 @@
-<p>
-  output-configuration-status works!
- </p>
- 	
- 	<table>
-	<thead>
-		<tr>
-			<th>Asset</th>
-			<th>Status</th>
-		</tr>
-	</thead>
+	<table align="center">
+		<thead>
+			<tr>
+				<th>Asset</th>
+				<th>Status</th>
+			</tr>
+		</thead>
 		<tbody>
-   		<tr *ngFor="let config of outputConfigurations">
- 				<td> {{ config.configName }}</td>
- 				<td> {{ config.isWorking }} </td>
- 			</tr>
- 		</tbody>
- 	</table>
+	  		<tr *ngFor="let config of outputConfigurations">
+				<td> {{ config.configName }}</td>
+				<td *ngIf="config.isWorking" style="color:green;"> GOOD </td>
+				<td *ngIf="!config.isWorking" style="color:red;"> !!BAD!! </td>
+			</tr>
+		</tbody>
+	</table>

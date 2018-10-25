@@ -45,7 +45,7 @@ public class StatusBoardController {
 		return "index"; 
 	}
 	
-	@CrossOrigin(origins = "http://localhost:4200")
+	@CrossOrigin(origins = "*", allowCredentials = "true", allowedHeaders = "*")
 	@RequestMapping(value = "status/", method = {RequestMethod.GET})
 	public List<OutputConfigurationViewModel> status() {
 		List<OutputConfigurationViewModel> statuses = statusService.getStatus();
