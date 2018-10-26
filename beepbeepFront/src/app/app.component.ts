@@ -17,9 +17,6 @@ export class AppComponent implements OnInit {
   constructor(private outputConfigurationApiService: OutputConfigurationApiService) {}
 
   ngOnInit(): void {
-//    this.outputConfigurationApiService.getOutputConfigurations().then(result =>
-//      this.configurations = result
-//    );
     interval(10000).subscribe(() =>
       this.outputConfigurationApiService.getOutputConfigurations().then(result =>
         this.configurations = result

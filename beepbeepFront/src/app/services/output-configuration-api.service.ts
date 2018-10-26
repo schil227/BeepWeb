@@ -1,7 +1,6 @@
 import { OutputConfiguration } from '../models/outputConfiguration';
 import { Injectable } from '@angular/core';
 import { Http } from '@angular/http';
-import { interval } from 'rxjs/observable/interval';
 import { _ } from 'lodash';
 
 @Injectable()
@@ -15,7 +14,6 @@ export class OutputConfigurationApiService {
     this.http = http;
     // Belongs in OnInit, but it wasn't getting called.
     this.allWorking = false;
-//    interval(10000).subscribe(() => this.getOutputConfigurations());
    }
 
   public getOutputConfigurations (): Promise<OutputConfiguration[]> {
