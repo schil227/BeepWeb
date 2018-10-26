@@ -2,22 +2,47 @@ import { OutputConfiguration } from '../models/outputConfiguration';
 import { Injectable } from '@angular/core';
 import { Http } from '@angular/http';
 import { interval } from 'rxjs/observable/interval';
+import { _ } from 'lodash';
 
 @Injectable()
 export class OutputConfigurationApiService {
 
-  private outputConfigurationApiUrl = 'http://10.10.3.88:8080/status/';
+  private outputConfigurationApiUrl = 'http://10.10.3.88:4200/api/';
   private http: Http;
+  private allWorking: boolean;
 
   constructor(http: Http) {
     this.http = http;
-    interval(10000).subscribe(() => this.getOutputConfigurations());
+    // Belongs in OnInit, but it wasn't getting called.
+    this.allWorking = false;
+//    interval(10000).subscribe(() => this.getOutputConfigurations());
    }
 
   public getOutputConfigurations (): Promise<OutputConfiguration[]> {
       return this.http.get(this.outputConfigurationApiUrl)
         .toPromise()
-        .then(response => response.json() as OutputConfiguration[]);
+        .then(response => {
+          const result = response.json() as OutputConfiguration[];
+          let tmpStatus = true;
+
+          // lodash was being a jerk.
+          for (let i = 0; i < result.length; i++) {
+            if (!result[i].isWorking) {
+              tmpStatus = false;
+              break;
+            }
+          }
+
+          if (this.allWorking && !tmpStatus) {
+            this.allWorking = false;
+            new Audio('/assets/car_wreck.mp3').play();
+          } else if (!this.allWorking && tmpStatus) {
+            this.allWorking = true;
+            new Audio('/assets/tom-tom-club_genius-of-love_intro.mp3').play();
+          }
+
+          return result;
+        });
   }
 
 }
