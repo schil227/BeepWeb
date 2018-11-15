@@ -16,7 +16,6 @@ import com.avionte.status.beepbeep.core.data.model.OutputConfiguration;
 import com.avionte.status.beepbeep.core.data.model.PinUpdateResultType;
 import com.avionte.status.beepbeep.core.data.model.RequestType;
 import com.avionte.status.beepbeep.core.services.outputConfigurationResultProcessors.IOutputConfigurationResultHandlerService;
-import com.avionte.status.beepbeep.core.services.outputConfigurationResultProcessors.IPinOutputProcessor;
 import com.avionte.status.beepbeep.core.services.responseProcessors.IProcessResponse;
 
 public class ProcessTeamCityOutputConfiguration implements IProcessOutputConfigurationService {
@@ -68,8 +67,6 @@ public class ProcessTeamCityOutputConfiguration implements IProcessOutputConfigu
 				char[] response = new char[contentLength];
 				
 				reader.read(response);
-				
-//				System.out.println("Response Content: " + String.valueOf(response));
 				
 				if(!responseProcessorComposite.processResponse(config, String.valueOf(response))) {
 					System.out.println("Got a failure: " + url);

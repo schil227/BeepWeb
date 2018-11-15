@@ -15,7 +15,7 @@ import com.avionte.status.beepbeep.core.services.outputConfigurationParsers.IPop
 import com.avionte.status.beepbeep.core.services.outputConfigurationParsers.ParseOutputConfigurationService;
 import com.avionte.status.beepbeep.core.services.outputConfigurationParsers.PopulateOutputConfigurationService;
 import com.avionte.status.beepbeep.core.services.outputConfigurationProcessors.IProcessOutputConfigurationService;
-import com.avionte.status.beepbeep.core.services.outputConfigurationProcessors.ProcessGETOutputConfiguration;
+import com.avionte.status.beepbeep.core.services.outputConfigurationProcessors.ProcessHealthCheckOutputConfiguration;
 import com.avionte.status.beepbeep.core.services.outputConfigurationProcessors.ProcessOutputConfigurationComposite;
 import com.avionte.status.beepbeep.core.services.outputConfigurationProcessors.ProcessTeamCityOutputConfiguration;
 import com.avionte.status.beepbeep.core.services.outputConfigurationResultProcessors.IOutputConfigurationResultHandlerService;
@@ -62,13 +62,13 @@ public class CompositionRoot {
 		return new ProcessTeamCityOutputConfiguration(getResponseProcessorComposite(), getOutputConfigurationResultHandlerService());
 	}
 	
-	public ProcessGETOutputConfiguration getProcessGETOutputConfiguration() {
-		return new ProcessGETOutputConfiguration(getResponseProcessorComposite());
+	public ProcessHealthCheckOutputConfiguration getProcessHealthCheckOutputConfiguration() {
+		return new ProcessHealthCheckOutputConfiguration(getOutputConfigurationResultHandlerService());
 	}
 	
 	@Bean
 	public IProcessOutputConfigurationService getProcessOutputConfigurationComposite() {
-		return new ProcessOutputConfigurationComposite(Arrays.asList(getProcessGETOutputConfiguration(), getProcessTeamCityOutputConfiguration()));
+		return new ProcessOutputConfigurationComposite(Arrays.asList(getProcessHealthCheckOutputConfiguration(), getProcessTeamCityOutputConfiguration()));
 	}
 	
 	public XMLResponseProcessor getXMLResponseProcessor() {

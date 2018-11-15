@@ -13,11 +13,6 @@ import org.springframework.web.bind.annotation.RestController;
 import com.avionte.status.beepbeep.core.data.viewModel.OutputConfigurationViewModel;
 import com.avionte.status.beepbeep.core.services.IStatusService;
 import com.avionte.status.beepbeep.core.services.IUpdaterService;
-//import com.pi4j.io.gpio.GpioController;
-//import com.pi4j.io.gpio.GpioFactory;
-//import com.pi4j.io.gpio.GpioPinDigitalOutput;
-//import com.pi4j.io.gpio.PinState;
-//import com.pi4j.io.gpio.RaspiPin;
 import com.pi4j.io.gpio.GpioController;
 import com.pi4j.io.gpio.GpioFactory;
 import com.pi4j.io.gpio.GpioPinDigitalOutput;
@@ -49,8 +44,6 @@ public class StatusBoardController {
 	@RequestMapping(value = "status/", method = {RequestMethod.GET})
 	public List<OutputConfigurationViewModel> status() {
 		List<OutputConfigurationViewModel> statuses = statusService.getStatus();
-		
-		statuses.add(new OutputConfigurationViewModel("Dummy", true));
 		
 		return statuses;
 	}

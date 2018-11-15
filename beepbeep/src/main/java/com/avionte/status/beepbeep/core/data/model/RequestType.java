@@ -1,6 +1,6 @@
 package com.avionte.status.beepbeep.core.data.model;
 
 public enum RequestType {
-	GET,
+	HEALTH_CHECK,
 	TEAMCITY
 }
